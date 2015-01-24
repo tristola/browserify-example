@@ -8,6 +8,7 @@ var browserSync = require('browser-sync');
 
 gulp.task('default', ['task-module', 'user-module', 'views', 'browserify', 'browser-sync']);
 
+//Autobootstrap
 gulp.task('task-module', function() {
   return gulp
     .src('app/test/**/*.js')
@@ -21,6 +22,7 @@ gulp.task('user-module', function() {
     .pipe(gulp.dest('app/user'));
 });
 
+//Browserify
 gulp.task('browserify', function() {
   gulp.src(['app/main.js'])
     .pipe(browserify({
