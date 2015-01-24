@@ -1,6 +1,6 @@
 module.exports = {
     bootstrap: {
-        path: 'index.js'
+        path: 'bootstrap.js'
     },
     moduleTypes: {
         animation: {

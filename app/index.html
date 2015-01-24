@@ -3,9 +3,16 @@
 <head>
 <title>Testing</title>
 </head>
-<body ng-controller='TestCtrl'>
-<h1>Browserify is awesome</h1>
-<p>{{test}}</p>
+<body>
+<ul>
+<div ng-controller='TestCtrl'>
+<li>{{test}} is loaded</li>
+<p></p>
+</div>
+<div ng-controller='AnotherCtrl'>
+  <li>{{test}} is loaded</li>
+</div>
+</ul>
 <script src="/js/bundle.js"></script>
 </body>
 </html>

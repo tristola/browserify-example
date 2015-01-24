@@ -1,6 +1,6 @@
 'use strict';
 require('angular');
-var app = angular.module('testApp', []);
+var app = angular.module('testApp', ['test','user']);
 
-require('./test')(app);
-//require('./user')(app);
+require('./test');
+require('./user');
