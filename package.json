@@ -1,0 +1,19 @@
+{
+  "name": "browserify-example",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Toni Ristola",
+  "license": "MIT",
+  "devDependencies": {
+    "angular": "~1.3.10",
+    "del": "~1.1.1",
+    "browserify": "~8.1.1",
+    "browser-sync": "~1.9.1",
+    "gulp-ng-autobootstrap": "~0.1.0",
+    "gulp": "~3.8.10"
+  }
+}
