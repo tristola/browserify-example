@@ -14,6 +14,11 @@
     "browserify": "~8.1.1",
     "browser-sync": "~1.9.1",
     "gulp-ng-autobootstrap": "~0.1.0",
-    "gulp": "~3.8.10"
+    "gulp": "~3.8.10",
+    "gulp-concat": "~2.4.3",
+    "gulp-browserify": "~0.5.1"
+  },
+  "browser": {
+      "angular": "./node_modules/angular/angular.js"
   }
 }
