@@ -24,7 +24,7 @@ gulp.task('user-module', function() {
 
 //Browserify
 gulp.task('browserify', function() {
-  gulp.src(['app/main.js'])
+  return gulp.src(['app/main.js'])
     .pipe(browserify({
       insertGlobals: true,
       debug: false
@@ -35,7 +35,7 @@ gulp.task('browserify', function() {
 
 
 gulp.task('views', function() {
-  gulp.src('app/index.html')
+  return gulp.src('app/index.html')
     .pipe(gulp.dest('dist/'));
 });
 
