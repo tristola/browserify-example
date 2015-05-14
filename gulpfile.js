@@ -40,11 +40,10 @@ gulp.task('user-module', function() {
 
 
 gulp.task('views', function() {
-  return gulp.src('app/index.html')
+  return gulp.src('app/**/*.html')
     .pipe(gulp.dest('dist/'));
 });
 
-// Static server
 gulp.task('browser-sync', function() {
   browserSync({
     server: {
