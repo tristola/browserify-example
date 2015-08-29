@@ -5,14 +5,16 @@
 </head>
 <body>
 <ul>
-<h1>What modules are loaded</h1>  
+<h1>What modules are loaded</h1>
+<span class="ng-cloak">
 <div ng-controller='TestCtrl'>
-<li>{{test}} is loaded</li>
+<li>Module test started {{test}} seconds ago.</li>
 <p></p>
 </div>
 <div ng-controller='AnotherCtrl'>
   <li>{{test}} is loaded</li>
 </div>
+</span>
 </ul>
 <script src="/js/bundle.js"></script>
 </body>

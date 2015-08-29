@@ -3,6 +3,7 @@ var ngconfig = require('./ngauto-config.js');
 var ngAutoBootstrap = require('gulp-ng-autobootstrap');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var babelify = require('babelify');
 
 var watchify = require('watchify');
 var browserify = require('browserify');
@@ -21,7 +22,7 @@ var customOpts = {
   debug: true
 };
 var opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts));
+var b = watchify(browserify(opts).transform(babelify));
 
 //Autobootstrap
 gulp.task('task-module', function() {
@@ -30,14 +31,13 @@ gulp.task('task-module', function() {
     .pipe(ngAutoBootstrap(ngconfig))
     .pipe(gulp.dest('app/test'));
 });
+
 gulp.task('user-module', function() {
   return gulp
     .src('app/user/**/*.js')
     .pipe(ngAutoBootstrap(ngconfig))
     .pipe(gulp.dest('app/user'));
 });
-
-
 
 gulp.task('views', function() {
   return gulp.src('app/**/*.html')
