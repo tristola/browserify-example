@@ -22,7 +22,7 @@ var customOpts = {
   debug: true
 };
 var opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts).transform(babelify));
+var b = watchify(browserify(opts));
 
 //Autobootstrap
 gulp.task('task-module', function() {
@@ -64,6 +64,7 @@ function bundle() {
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
     .pipe(sourcemaps.write('./')) // writes .map file
+    .transform(babelify)
     .pipe(gulp.dest('./dist'))
     .pipe(reload({stream: true, once: true}));
 }
