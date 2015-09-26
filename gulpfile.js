@@ -14,7 +14,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 
 
-gulp.task('default', ['task-module', 'user-module', 'views', 'browserify', 'browser-sync']);
+gulp.task('default', ['task-module', 'user-module', 'views', 'browserify', 'browser-sync', 'watch']);
 
 // add custom browserify options here
 var customOpts = {
@@ -37,6 +37,12 @@ gulp.task('user-module', function() {
     .src('app/user/**/*.js')
     .pipe(ngAutoBootstrap(ngconfig))
     .pipe(gulp.dest('app/user'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch('app/**/*.js', ['browserify']);
+    gulp.watch('app/**/*.html', ['views'] );
+    gulp.watch("dist/*.html").on('change', reload);
 });
 
 gulp.task('views', function() {
