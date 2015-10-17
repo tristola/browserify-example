@@ -17,6 +17,7 @@
     "gulp": "~3.8.10",
     "gulp-browserify": "~0.5.1",
     "gulp-concat": "~2.4.3",
+    "gulp-folders": "^1.1.0",
     "gulp-ng-autobootstrap": "~0.1.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.4",

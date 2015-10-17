@@ -1,6 +1,8 @@
 'use strict';
 require('angular');
-var app = angular.module('testApp', ['test','user']);
-
-require('./test');
-require('./user');
+//TODO: iiterate modules automatically
+var app = angular.module('testApp', [
+    require('./modules/test'),
+    require('./modules/user')
+  ]
+);

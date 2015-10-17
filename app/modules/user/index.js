@@ -1,5 +1,5 @@
 'use strict';
 require('angular');
-var app = angular.module('user', []);
-
+var app = angular.module('test', []);
 require('./bootstrap')(app);
+module.exports = 'test';

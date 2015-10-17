@@ -14,11 +14,12 @@ var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 
 var ngAnnotate = require('gulp-ng-annotate');
+var folders = require('gulp-folders');
 var minify = require('gulp-minify');
 var uglify = require('gulp-uglify');
 
 
-gulp.task('default', ['task-module', 'user-module', 'views', 'browserify', 'browser-sync', 'watch']);
+gulp.task('default', ['modules', 'views', 'browserify', 'browser-sync', 'watch']);
 
 // add custom browserify options here
 var customOpts = {
@@ -28,20 +29,15 @@ var customOpts = {
 var opts = assign({}, watchify.args, customOpts);
 var b = watchify(browserify(opts).transform(babelify));
 
-//Autobootstrap
-gulp.task('task-module', function() {
-  return gulp
-    .src('app/test/**/*.js')
-    .pipe(ngAutoBootstrap(ngconfig))
-    .pipe(gulp.dest('app/test'));
-});
 
-gulp.task('user-module', function() {
-  return gulp
-    .src('app/user/**/*.js')
-    .pipe(ngAutoBootstrap(ngconfig))
-    .pipe(gulp.dest('app/user'));
-});
+
+//Autobootstrap
+gulp.task('modules', folders('./app/modules', function(folder){
+    return gulp
+      .src('./app/modules/'+folder+'/**/*.js')
+      .pipe(ngAutoBootstrap(ngconfig))
+      .pipe(gulp.dest('./app/modules/'+folder));
+}));
 
 gulp.task('watch', function() {
     gulp.watch('app/**/*.js', ['browserify']);
@@ -72,11 +68,11 @@ function bundle() {
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
     .pipe(source('js/bundle.js'))
     .pipe(buffer())
-    .pipe(ngAnnotate())
-    .pipe(minify())
-    .pipe(uglify())
-    .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+    .pipe(ngAnnotate().on('error', gutil.log))
+    .pipe(sourcemaps.init({loadMaps: false})) // loads map from browserify file
     .pipe(sourcemaps.write('./')) // writes .map file
+    .pipe(minify().on('error', gutil.log))
+    //.pipe(uglify().on('error', gutil.log))
     .pipe(gulp.dest('./dist'))
     .pipe(reload({stream: true, once: true}));
 }
