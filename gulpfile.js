@@ -13,6 +13,10 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 
+var ngAnnotate = require('gulp-ng-annotate');
+var minify = require('gulp-minify');
+var uglify = require('gulp-uglify');
+
 
 gulp.task('default', ['task-module', 'user-module', 'views', 'browserify', 'browser-sync', 'watch']);
 
@@ -68,6 +72,9 @@ function bundle() {
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
     .pipe(source('js/bundle.js'))
     .pipe(buffer())
+    .pipe(ngAnnotate())
+    .pipe(minify())
+    .pipe(uglify())
     .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
     .pipe(sourcemaps.write('./')) // writes .map file
     .pipe(gulp.dest('./dist'))
