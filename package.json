@@ -31,8 +31,10 @@
     "angular": "./node_modules/angular/angular.js"
   },
   "dependencies": {
+    "browserify-ngannotate": "^1.0.1",
+    "gulp-jshint": "^1.11.2",
     "gulp-minify": "0.0.5",
-    "gulp-ng-annotate": "^1.1.0",
-    "gulp-uglify": "^1.4.2"
+    "gulp-uglify": "^1.4.2",
+    "jshint": "^2.8.0"
   }
 }

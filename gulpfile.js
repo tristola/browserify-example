@@ -13,13 +13,13 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 
-var ngAnnotate = require('gulp-ng-annotate');
+var ngAnnotate = require('browserify-ngannotate');
 var folders = require('gulp-folders');
 var minify = require('gulp-minify');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
 
-
-gulp.task('default', ['modules', 'views', 'browserify', 'browser-sync', 'watch']);
+gulp.task('default', ['modules', 'views', 'jshint', 'browserify', 'browser-sync', 'watch']);
 
 // add custom browserify options here
 var customOpts = {
@@ -50,6 +50,12 @@ gulp.task('views', function() {
     .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('jshint', function() {
+    gulp.src('/js/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});
+
 gulp.task('browser-sync', function() {
   browserSync({
     server: {
@@ -72,7 +78,7 @@ function bundle() {
     .pipe(sourcemaps.init({loadMaps: false})) // loads map from browserify file
     .pipe(sourcemaps.write('./')) // writes .map file
     .pipe(minify().on('error', gutil.log))
-    //.pipe(uglify().on('error', gutil.log))
+    .pipe(uglify().on('error', gutil.log))
     .pipe(gulp.dest('./dist'))
     .pipe(reload({stream: true, once: true}));
 }
