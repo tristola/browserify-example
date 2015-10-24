@@ -4,6 +4,9 @@ var ngAutoBootstrap = require('gulp-ng-autobootstrap');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var babelify = require('babelify');
+var ngannotate = require('gulp-ng-annotate');
+var rimraf = require('rimraf');
+var rename = require("gulp-rename");
 
 var watchify = require('watchify');
 var browserify = require('browserify');
@@ -13,23 +16,26 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 
-var ngAnnotate = require('browserify-ngannotate');
 var folders = require('gulp-folders');
 var minify = require('gulp-minify');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 
-gulp.task('default', ['modules', 'views', 'jshint', 'browserify', 'browser-sync', 'watch']);
+gulp.task('default', ['clean','modules', 'views', 'jshint', 'browserify', 'browser-sync', 'watch']);
 
 // add custom browserify options here
 var customOpts = {
   entries: ['./app/main.js'],
-  debug: true
+  fullpaths: false,
+  debug: true,
+
 };
 var opts = assign({}, watchify.args, customOpts);
 var b = watchify(browserify(opts).transform(babelify));
 
-
+gulp.task('clean', function (cb) {
+   rimraf('./dist', function(){});
+});
 
 //Autobootstrap
 gulp.task('modules', folders('./app/modules', function(folder){
@@ -58,6 +64,7 @@ gulp.task('jshint', function() {
 
 gulp.task('browser-sync', function() {
   browserSync({
+    open: false,
     server: {
       baseDir: "dist/"
     }
@@ -72,13 +79,14 @@ function bundle() {
   return b.bundle()
     // log errors if they happen
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('js/bundle.js'))
+    .pipe(source('app/main.js'))
+    .pipe(rename('js/bundle.js'))
     .pipe(buffer())
-    .pipe(ngAnnotate().on('error', gutil.log))
+    .pipe(ngannotate())
+    .pipe(minify().on('error', gutil.log))
+    .pipe(uglify({mangle: false}).on('error', gutil.log))
     .pipe(sourcemaps.init({loadMaps: false})) // loads map from browserify file
     .pipe(sourcemaps.write('./')) // writes .map file
-    .pipe(minify().on('error', gutil.log))
-    .pipe(uglify().on('error', gutil.log))
     .pipe(gulp.dest('./dist'))
     .pipe(reload({stream: true, once: true}));
 }
